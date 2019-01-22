@@ -1,6 +1,7 @@
 import random
 
 POSSIBLE_MOVES = dict()
+# generatedProblems = []
 
 class Board(object):
     parity = -1
@@ -35,6 +36,26 @@ class Board(object):
     # def updateBoard(newBoard):
     #     return
 
+    # def switchTiles(self, sourceInd, targetV):
+    #     sourceInd = self.boardState.index(source)
+    #     targetInd = self.boardState.index(targetVal)
+    #     temp = targetInd
+    #     sourceInd = 
+
+    def simMoves(self):
+        numSimMoves = random.randrange(1, 50, 1)
+        print("Simulated moves:", numSimMoves)
+
+        for i in range(numSimMoves):
+            blankInd = self.boardState.index(0)
+            possibleMoves = self.getMoves(blankInd)
+            chosenMove = random.choice(possibleMoves)
+
+            tempVal = self.boardState[chosenMove]
+            self.boardState[chosenMove] = self.boardState[blankInd]
+            self.boardState[blankInd] = tempVal
+        print("New Board State:", self.boardState)
+        return self.boardState
 
     def printBoard(self):
         for i in range (3):
@@ -42,12 +63,42 @@ class Board(object):
 
         return
 
+def genRandProblems(board):
+    # global generatedProblems
+    generatedProblems = list()
+    i = 0
+    while (i < 5):
+        # board.createDict()
+        # board = board.simMoves()
+        toAdd = board.simMoves()
+        # toAdd = board.boardState
+        print(toAdd)
+        print("________________________________")
+        board = Board(-1, toAdd)
+        generatedProblems.append(board)
+        # generatedProblems = generatedProblems.append(toAdd)
+        i+=1
+
+    return generatedProblems
+
+
+
 def main():
     print("Test")
 
-    board = Board(-1, [0,1,3,0,0,0,0,0,0] )
+    # problemList generatedProblems
 
-    board.printBoard()
+    board = Board(-1, [0,1,2,3,4,5,6,7,8] )
+    board.createDict()
+    
+    problemSet =  genRandProblems(board)
+
+
+    for item in problemSet:
+        # print(item.boardState)
+        item.printBoard()
+        # print(item)
+        print("_________________________")
 
 if __name__ == "__main__":
     main()
