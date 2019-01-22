@@ -45,7 +45,7 @@ class Board(object):
 def main():
     print("Test")
 
-    board = Board(-1, [0,1,3,0,0,0,0,0,0] )
+    board = Board(-1, [0,1,3,0,0,0,0,0,0])
 
     board.printBoard()
 
