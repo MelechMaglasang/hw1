@@ -5,7 +5,7 @@ POSSIBLE_MOVES = dict()
 
 class Board(object):
     parity = -1
-    boardState = [0,1,2,3,4,5,6,7,8,9]
+    # boardState = [0,1,2,3,4,5,6,7,8,9]
 
     def __init__(self, parity, boardState):
         self.parity = parity
@@ -54,18 +54,34 @@ class Board(object):
             tempVal = self.boardState[chosenMove]
             self.boardState[chosenMove] = self.boardState[blankInd]
             self.boardState[blankInd] = tempVal
+
         print("New Board State:", self.boardState)
         return self.boardState
 
     def printBoard(self):
-        for i in range (3):
-            print ( str(self.boardState[0+i]) + " " + str( self.boardState[1+i]) +" "+ str(self.boardState[2+i]) )
+        for i in range(3):
+            if (i == 0):
+                print (self.boardState[0], self.boardState[1], self.boardState[2])
+                # print()
+            elif (i == 1):
+                print (self.boardState[3], self.boardState[4], self.boardState[5])
+                # print()
+            else:
+                print (self.boardState[6], self.boardState[7], self.boardState[8])
+                # print()
 
         return
 
 def genRandProblems(board):
+    generatedProblems = []
+    for x in range(5):
+        temp = Board(-1, [-1,-1,-1,-1,-1,-1,-1,-1,-1])
+        generatedProblems.append(temp)
+    
+    # print(generatedProblems[1].boardState)
+
     # global generatedProblems
-    generatedProblems = list()
+    # generatedProblems = list()
     i = 0
 
 
@@ -74,14 +90,13 @@ def genRandProblems(board):
         # board.createDict()
         # board = board.simMoves()
         toAdd = board.simMoves()
-        # toAdd = board.boardState
-        print(toAdd)
-        print("________________________________")
-        board = Board(-1, toAdd)
+        # toAdd = board.boardState()
 
-        print(board.boardState)
-        # board.printBoard()
-        # generatedProblems.append(board)
+        # print(toAdd)
+        # print("________________________________")
+
+        # board = Board(-1, toAdd)
+        generatedProblems[i].boardState = toAdd[:]
         # generatedProblems = generatedProblems.append(toAdd)
         i+=1
 
@@ -95,7 +110,7 @@ def genRandProblems(board):
 
 
 def main():
-    print("Test")
+    # print("Test")
 
     # problemList generatedProblems
 
@@ -105,11 +120,12 @@ def main():
     problemSet =  genRandProblems(board)
 
 
-    # for item in problemSet:
-    #     # print(item.boardState)
-    #     item.printBoard()
-    #     # print(item)
-    #     print("_________________________")
+    for item in problemSet:
+        # print(item.boardState)
+        item.printBoard()
+        # print(item)
+        print("_________________________")
+        continue
 
 if __name__ == "__main__":
     main()
