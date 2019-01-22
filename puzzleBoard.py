@@ -64,18 +64,27 @@ class Board(object):
         return
 
 def genRandProblems(board):
+    generatedProblems = []
+    for x in range(5):
+        temp = Board(-1, [-1,-1,-1,-1,-1,-1,-1,-1,-1])
+        generatedProblems.append(temp)
+    
+    # print(generatedProblems[1].boardState)
+
     # global generatedProblems
-    generatedProblems = list()
+    # generatedProblems = list()
     i = 0
     while (i < 5):
         # board.createDict()
         # board = board.simMoves()
-        toAdd = board.simMoves()
+        # toAdd = board.simMoves()
         # toAdd = board.boardState
-        print(toAdd)
-        print("________________________________")
-        board = Board(-1, toAdd)
-        generatedProblems.append(board)
+
+        # print(toAdd)
+        # print("________________________________")
+
+        # board = Board(-1, toAdd)
+        generatedProblems[i].boardState = board.simMoves()
         # generatedProblems = generatedProblems.append(toAdd)
         i+=1
 
@@ -84,7 +93,7 @@ def genRandProblems(board):
 
 
 def main():
-    print("Test")
+    # print("Test")
 
     # problemList generatedProblems
 
@@ -95,10 +104,11 @@ def main():
 
 
     for item in problemSet:
-        # print(item.boardState)
-        item.printBoard()
+        print(item.boardState)
+        # item.printBoard()
         # print(item)
-        print("_________________________")
+        # print("_________________________")
+        continue
 
 if __name__ == "__main__":
     main()
