@@ -11,6 +11,7 @@ class Board(object):
         self.parity = parity
         self.boardState = boardState
 
+
     def createDict(self):
         POSSIBLE_MOVES[0] = [1,3]
         POSSIBLE_MOVES[1] = [0,2,4]
@@ -30,8 +31,26 @@ class Board(object):
     # def calculateParity():
     #     return
 
-    # def doMoves():
-    #     return
+
+    #Commit the move to the board
+    def doMove(self, source, target):
+
+        blankInd = self.boardState.index(0)
+
+        if (source != blankInd):
+            #Invalid move!!!!!
+            return False
+
+        else:
+
+            tempVal = self.boardState[target]
+            self.boardState[target] = self.boardState[blankInd]
+            self.boardState[blankInd] = tempVal
+
+            #Fair move!!!!
+            return True
+
+
 
     # def updateBoard(newBoard):
     #     return
