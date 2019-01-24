@@ -10,6 +10,7 @@ class Board(object):
     def __init__(self, parity, boardState):
         self.parity = parity
         self.boardState = boardState
+        self.dimension = 3
 
 
     def createDict(self):
