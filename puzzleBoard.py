@@ -1,4 +1,5 @@
 import random
+import math
 
 POSSIBLE_MOVES = dict()
 # generatedProblems = []
@@ -11,6 +12,9 @@ class Board(object):
         self.parity = parity
         self.boardState = boardState
         self.dimension = 3
+        self.prevState = None
+        self.h1Val = None
+        self.h2Val = None
 
 
     def createDict(self):
@@ -29,6 +33,36 @@ class Board(object):
     def getMoves(self, tileIndex):
         return POSSIBLE_MOVES[tileIndex]
 
+    
+    def getRow(self,index):
+
+        if(index < 4):
+            return 0
+        elif (index < 6):
+            return 1
+        else:
+            return 2
+
+    def calch1(self):
+
+        numMisplaced = 0
+        for i in len(self.boardState):
+            if (self.boardState[i] != i):
+                numMisplaced += 1
+
+        return numMisplaced
+
+    def calch2(self):
+
+        numMisplaced = 0
+        for i in len(self.boardState):
+            if (self.boardState[i] != i):
+
+                #column + row
+                numMisplaced += self.boardState[i] % 3 + math.fabs(self.getRow(self.boardState[i]) - i % 3 )
+
+        return numMisplaced
+
     # def calculateParity():
     #     return
 
@@ -43,6 +77,8 @@ class Board(object):
             return False
 
         else:
+
+            self.boardState = self.prevState
 
             tempVal = self.boardState[target]
             self.boardState[target] = self.boardState[blankInd]
@@ -92,40 +128,6 @@ class Board(object):
 
         return
 
-def genRandProblems(board):
-    generatedProblems = []
-    for x in range(5):
-        temp = Board(-1, [-1,-1,-1,-1,-1,-1,-1,-1,-1])
-        generatedProblems.append(temp)
-    
-    # print(generatedProblems[1].boardState)
-
-    # global generatedProblems
-    # generatedProblems = list()
-    i = 0
-
-
-    
-    while (i < 5):
-        # board.createDict()
-        # board = board.simMoves()
-        toAdd = board.simMoves()
-        # toAdd = board.boardState()
-
-        # print(toAdd)
-        # print("________________________________")
-
-        # board = Board(-1, toAdd)
-        generatedProblems[i].boardState = toAdd[:]
-        # generatedProblems = generatedProblems.append(toAdd)
-        i+=1
-
-        print ("asldkfjalsdkjfl")
-
-        for bleh in generatedProblems:
-            print(bleh.boardState);
-
-    return generatedProblems
 
 
 

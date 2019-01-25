@@ -5,37 +5,51 @@ import math
 class Player(object):
 
     def __init__(self):
-        self.hMode = 1
         self.numMoves = 0
 
 
-    def getRow(self,index):
 
-        if(index < 4):
-            return 0
-        elif (index < 6):
-            return 1
-        else:
-            return 2
+    def boardSolver(self, board, mode):
 
 
-    def calch1(self, boardState):
 
-        numMisplaced = 0
-        for i in len(boardState):
-            if (boardState[i] != i):
-                numMisplaced += 1
+        for i in range (1200):
 
-        return numMisplaced
 
-    def calch2(self, boardState):
+def genRandProblems(board):
+    generatedProblems = []
+    for x in range(5):
+        temp = Board(-1, [-1,-1,-1,-1,-1,-1,-1,-1,-1])
+        generatedProblems.append(temp)
+    
+    # print(generatedProblems[1].boardState)
 
-        numMisplaced = 0
-        for i in len(boardState):
-            if (boardState[i] != i):
+    # global generatedProblems
+    # generatedProblems = list()
+    i = 0
 
-                #column + row
-                numMisplaced += boardState[i] % 3 + math.fabs(self.getRow(boardState[i]) - i % 3 )
 
-        return numMisplaced
+    
+    while (i < 5):
+        # board.createDict()
+        # board = board.simMoves()
+        toAdd = board.simMoves()
+        # toAdd = board.boardState()
+
+        # print(toAdd)
+        # print("________________________________")
+
+        # board = Board(-1, toAdd)
+        generatedProblems[i].boardState = toAdd[:]
+        # generatedProblems = generatedProblems.append(toAdd)
+        i+=1
+
+        print ("asldkfjalsdkjfl")
+
+        for bleh in generatedProblems:
+            print(bleh.boardState);
+
+    return generatedProblems
+
+
 
