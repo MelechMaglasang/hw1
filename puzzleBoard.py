@@ -3,6 +3,15 @@ import math
 
 POSSIBLE_MOVES = dict()
 # generatedProblems = []
+POSSIBLE_MOVES[0] = [1,3]
+POSSIBLE_MOVES[1] = [0,2,4]
+POSSIBLE_MOVES[2] = [1,5]
+POSSIBLE_MOVES[3] = [0,4,6]
+POSSIBLE_MOVES[4] = [1,3,5,7]
+POSSIBLE_MOVES[5] = [2,4,8]
+POSSIBLE_MOVES[6] = [3,7]
+POSSIBLE_MOVES[7] = [4,6,8]
+POSSIBLE_MOVES[8] = [5,7]
 
 class Board(object):
     parity = -1
@@ -16,18 +25,6 @@ class Board(object):
         self.h1Val = None
         self.h2Val = None
 
-
-    def createDict(self):
-        POSSIBLE_MOVES[0] = [1,3]
-        POSSIBLE_MOVES[1] = [0,2,4]
-        POSSIBLE_MOVES[2] = [1,5]
-        POSSIBLE_MOVES[3] = [0,4,6]
-        POSSIBLE_MOVES[4] = [1,3,5,7]
-        POSSIBLE_MOVES[5] = [2,4,8]
-        POSSIBLE_MOVES[6] = [3,7]
-        POSSIBLE_MOVES[7] = [4,6,8]
-        POSSIBLE_MOVES[8] = [5,7]
-        
 
         
     def getMoves(self, tileIndex):
@@ -100,7 +97,7 @@ class Board(object):
 
     def simMoves(self):
         numSimMoves = random.randrange(1, 50, 1)
-        print("Simulated moves:", numSimMoves)
+        # print("Simulated moves:", numSimMoves)
 
         for i in range(numSimMoves):
             blankInd = self.boardState.index(0)
@@ -111,7 +108,7 @@ class Board(object):
             self.boardState[chosenMove] = self.boardState[blankInd]
             self.boardState[blankInd] = tempVal
 
-        print("New Board State:", self.boardState)
+        # print("New Board State:", self.boardState)
         return self.boardState
 
     def printBoard(self):
@@ -139,7 +136,7 @@ def main():
     board = Board(-1, [0,1,2,3,4,5,6,7,8] )
     board.createDict()
     
-    problemSet =  genRandProblems(board)
+    # problemSet =  genRandProblems(board)
 
 
     for item in problemSet:

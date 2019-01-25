@@ -9,17 +9,25 @@ class Player(object):
 
 
 
-    def boardSolver(self, board, mode):
+    def boardSolver(self, genProblems):
+
+        for item in genProblems:
+            # print(item.boardState)
+            item.printBoard()
+            # print(item)
+            print("_________________________")
+            continue
+
+        
 
 
+        return
 
-        for i in range (1200):
 
-
-def genRandProblems(board):
+def genRandProblems(numBoards):
     generatedProblems = []
-    for x in range(5):
-        temp = Board(-1, [-1,-1,-1,-1,-1,-1,-1,-1,-1])
+    for x in range(numBoards):
+        temp = puzzleBoard.Board(-1, [0,1,2,3,4,5,6,7,8])
         generatedProblems.append(temp)
     
     # print(generatedProblems[1].boardState)
@@ -27,13 +35,12 @@ def genRandProblems(board):
     # global generatedProblems
     # generatedProblems = list()
     i = 0
-
-
+ 
     
-    while (i < 5):
+    while (i < numBoards):
         # board.createDict()
         # board = board.simMoves()
-        toAdd = board.simMoves()
+        toAdd = generatedProblems[i].simMoves()
         # toAdd = board.boardState()
 
         # print(toAdd)
@@ -44,12 +51,34 @@ def genRandProblems(board):
         # generatedProblems = generatedProblems.append(toAdd)
         i+=1
 
-        print ("asldkfjalsdkjfl")
+        # print ("asldkfjalsdkjfl")
 
-        for bleh in generatedProblems:
-            print(bleh.boardState);
+        # for bleh in generatedProblems:
+        #     print(bleh.boardState);
 
     return generatedProblems
 
 
+
+def main():
+    # print("Test")
+
+    # problemList generatedProblems
+
+    # board = puzzleBoard.Board(-1, [0,1,2,3,4,5,6,7,8] )
+    # board.createDict()
+    
+    problemSet =  genRandProblems(1200)
+
+    player = Player()
+
+    player.boardSolver(problemSet)
+
+    print(len(problemSet))
+
+
+   
+
+if __name__ == "__main__":
+    main()
 
