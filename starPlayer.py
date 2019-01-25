@@ -1,6 +1,25 @@
 import puzzleBoard
 import math
+import heapq
+import copy
 
+
+class myHeap(object):
+    def __init__(self, initial=None, key=lambda x:x):
+       self.key = key
+       if initial:
+           self._data = [(key(item), item) for item in initial]
+           heapq.heapify(self._data)
+       else:
+           self._data = []
+
+    def push(self, item):
+       heapq.heappush(self._data, (self.key(item), item))
+
+    def pop(self):
+       return heapq.heappop(self._data)[1]
+    def isEmpty(self):
+        return self._data.isEmpty() 
 
 class Player(object):
 
@@ -9,14 +28,48 @@ class Player(object):
 
 
 
-    def boardSolver(self, genProblems):
+    def boardSolver(self, board, hMode):
 
-        for item in genProblems:
-            # print(item.boardState)
-            item.printBoard()
-            # print(item)
-            print("_________________________")
-            continue
+        if (hMode == 0):
+
+            board.h1Val = board.calc1()
+
+            minQueue = myHeap()
+
+            initial = [board.h1Val + self.numMoves, board]
+
+            minQueue.push(initial)
+
+            while (!minQueue.isEmpty()):
+                currBoard = minQueue.pop()
+
+                #If the heuristic is zero then it is at goal
+                if (currBoard[0] == 0):
+                    return currBoard
+
+                self.numMoves += 1
+
+                #Grabs for where the zero and returns list of possible moves
+                blankIndex = board.boardState.index(0)
+                availMoves = board.getMoves(blankIndex)
+
+                for move in availMoves:
+                    tempBoard = copy.deepcopy(board)
+
+                    tempBoard.doMove(blankIndex, move)
+
+                    # Check if move has been done before?
+
+                    tempBoard.h1Val = tempBoard.calch1()
+
+                    nextNode = [tempBoard.h1Val + self.numMoves, tempBoard]
+                    minQueue.push(nextNode)
+
+
+
+
+
+       
 
         
 
@@ -68,13 +121,13 @@ def main():
     # board = puzzleBoard.Board(-1, [0,1,2,3,4,5,6,7,8] )
     # board.createDict()
     
-    problemSet =  genRandProblems(1200)
+    # problemSet =  genRandProblems(1200)
 
     player = Player()
 
-    player.boardSolver(problemSet)
+    player.boardSolver(genRandProblems(1))
 
-    print(len(problemSet))
+    # print(len(problemSet))
 
 
    
