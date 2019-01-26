@@ -43,7 +43,7 @@ class Board(object):
     def calch1(self):
 
         numMisplaced = 0
-        for i in len(self.boardState):
+        for i in range(len(self.boardState)):
             if (self.boardState[i] != i):
                 numMisplaced += 1
 
@@ -52,7 +52,7 @@ class Board(object):
     def calch2(self):
 
         numMisplaced = 0
-        for i in len(self.boardState):
+        for i in range(len(self.boardState)):
             if (self.boardState[i] != i):
 
                 #column + row
@@ -75,7 +75,7 @@ class Board(object):
 
         else:
 
-            self.boardState = self.prevState
+            self.prevState = self.boardState
 
             tempVal = self.boardState[target]
             self.boardState[target] = self.boardState[blankInd]

@@ -19,7 +19,10 @@ class myHeap(object):
     def pop(self):
        return heapq.heappop(self._data)[1]
     def isEmpty(self):
-        return self._data.isEmpty() 
+        if (len(self._data) == 0):
+            return True
+        else:
+            return False
 
 class Player(object):
 
@@ -32,7 +35,7 @@ class Player(object):
 
         if (hMode == 0):
 
-            board.h1Val = board.calc1()
+            board.h1Val = board.calch1()
 
             minQueue = myHeap()
 
@@ -40,21 +43,21 @@ class Player(object):
 
             minQueue.push(initial)
 
-            while (!minQueue.isEmpty()):
+            while (minQueue.isEmpty() == False):
                 currBoard = minQueue.pop()
 
-                #If the heuristic is zero then it is at goal
-                if (currBoard[0] == 0):
+                #If thse heuristic is zero then it is at goal
+                if (board.calch1 == 0):
                     return currBoard
 
                 self.numMoves += 1
 
                 #Grabs for where the zero and returns list of possible moves
-                blankIndex = board.boardState.index(0)
-                availMoves = board.getMoves(blankIndex)
+                blankIndex = currBoard[1].boardState.index(0)
+                availMoves = currBoard[1].getMoves(blankIndex)
 
                 for move in availMoves:
-                    tempBoard = copy.deepcopy(board)
+                    tempBoard = copy.deepcopy(currBoard[1])
 
                     tempBoard.doMove(blankIndex, move)
 
@@ -125,7 +128,7 @@ def main():
 
     player = Player()
 
-    player.boardSolver(genRandProblems(1))
+    player.boardSolver(genRandProblems(1)[0], 0)
 
     # print(len(problemSet))
 
