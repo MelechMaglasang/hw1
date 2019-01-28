@@ -122,6 +122,33 @@ def genRandProblems(numBoards):
 
     return generatedProblems
 
+def branchingFactor( N, d):
+    N += 1
+    initialGuess = N ** (1.0 // d)
+
+    upperBound = initialGuess + (initialGuess)
+
+    lowerBound = initialGuess - (initialGuess)
+
+
+    while (initialGuess < upperBound and initialGuess > lowerBound):
+        
+        nGuess = 0
+        for i in range (d+1):
+            nGuess += initialGuess ** i
+
+        if ( nGuess <= N + 1 and nGuess >= N - 1 ):
+            print ("Binary")
+            return initialGuess
+
+        elif (nGuess > N):
+            initialGuess -= (.005*initialGuess)
+        elif (nGuess < N):
+            initialGuess += (.005*initialGuess)
+
+
+    return initialGuess
+
 
 def main():
     # print("Test")
@@ -135,15 +162,23 @@ def main():
 
     player = Player()
 
+    print (branchingFactor(6, 2 ))
+
+    print (branchingFactor(12, 4 ))
+
+    print (branchingFactor(18, 6 ))
+
+    print (branchingFactor(1641, 24))
+
 
     # player.boardSolver(board, 1 )
 
     # board.calch2()
 
-    for i in problemSet:
-        # player = Player()
-        player.boardSolver(i, 0)
-    # print(len(problemSet))
+    # for i in problemSet:
+    #     # player = Player()
+    #     player.boardSolver(i, 0)
+    # # print(len(problemSet))
 
 
 if __name__ == "__main__":
