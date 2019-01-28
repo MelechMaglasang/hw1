@@ -5,31 +5,31 @@ import copy
 
 
 class myHeap(object):
-    def __init__(self, initial=None, key=lambda x:x):
-       self.key = key
-       if initial:
-           self._data = [(key(item), item) for item in initial]
-           heapq.heapify(self._data)
-       else:
-           self._data = []
+    def __init__(self, initial=None, key=lambda x: x):
+        self.key = key
+        if initial:
+            self._data = [(key(item), item) for item in initial]
+            heapq.heapify(self._data)
+        else:
+            self._data = []
 
     def push(self, item):
-       heapq.heappush(self._data, (self.key(item), item))
+        heapq.heappush(self._data, (self.key(item), item))
 
     def pop(self):
-       return heapq.heappop(self._data)[1]
+        return heapq.heappop(self._data)[1]
+
     def isEmpty(self):
         if (len(self._data) == 0):
             return True
         else:
             return False
 
+
 class Player(object):
 
     def __init__(self):
         self.numMoves = 0
-
-
 
     def boardSolver(self, board, hMode):
 
@@ -46,13 +46,15 @@ class Player(object):
             while (minQueue.isEmpty() == False):
                 currBoard = minQueue.pop()
 
-                #If thse heuristic is zero then it is at goal
-                if (board.calch1 == 0):
+                # If thse heuristic is zero then it is at goal
+                
+                if (currBoard[1].calch1() == 0):
+                    print (self.numMoves)
                     return currBoard
 
                 self.numMoves += 1
 
-                #Grabs for where the zero and returns list of possible moves
+                # Grabs for where the zero and returns list of possible moves
                 blankIndex = currBoard[1].boardState.index(0)
                 availMoves = currBoard[1].getMoves(blankIndex)
 
@@ -69,30 +71,18 @@ class Player(object):
                     minQueue.push(nextNode)
 
 
-
-
-
-       
-
-        
-
-
-        return
-
-
 def genRandProblems(numBoards):
     generatedProblems = []
     for x in range(numBoards):
-        temp = puzzleBoard.Board(-1, [0,1,2,3,4,5,6,7,8])
+        temp = puzzleBoard.Board(-1, [0, 1, 2, 3, 4, 5, 6, 7, 8])
         generatedProblems.append(temp)
-    
+
     # print(generatedProblems[1].boardState)
 
     # global generatedProblems
     # generatedProblems = list()
     i = 0
- 
-    
+
     while (i < numBoards):
         # board.createDict()
         # board = board.simMoves()
@@ -105,7 +95,7 @@ def genRandProblems(numBoards):
         # board = Board(-1, toAdd)
         generatedProblems[i].boardState = toAdd[:]
         # generatedProblems = generatedProblems.append(toAdd)
-        i+=1
+        i += 1
 
         # print ("asldkfjalsdkjfl")
 
@@ -115,26 +105,22 @@ def genRandProblems(numBoards):
     return generatedProblems
 
 
-
 def main():
     # print("Test")
 
     # problemList generatedProblems
 
-    # board = puzzleBoard.Board(-1, [0,1,2,3,4,5,6,7,8] )
+    board = puzzleBoard.Board(-1, [1,0,2,3,4,5,6,7,8] )
     # board.createDict()
-    
+
     # problemSet =  genRandProblems(1200)
 
     player = Player()
 
-    player.boardSolver(genRandProblems(1)[0], 0)
+    player.boardSolver(board, 0)
 
     # print(len(problemSet))
 
 
-   
-
 if __name__ == "__main__":
     main()
-
