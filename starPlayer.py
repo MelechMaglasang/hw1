@@ -22,6 +22,8 @@ class Player(object):
 
             heapq.heappush(minQueue , initial)
 
+            nodesGenerated = 1
+
             visited = set()
 
             while ( minQueue):
@@ -35,7 +37,8 @@ class Player(object):
                 # If thse heuristic is zero then it is at goal
                 
                 if (currBoard[2].calch1() == 0):
-                    print (currBoard[2].numMoves)
+                    print ("Number of Moves:", currBoard[2].numMoves)
+                    print ("Number of Nodes Generated:", nodesGenerated)
                     return currBoard
 
                 # self.numMoves += 1
@@ -51,12 +54,17 @@ class Player(object):
 
                     tempBoard.numMoves += 1
 
+                    # nodesGenerated += 1
+
+
                     # Check if move has been done before?
                     
                     if (tuple(tempBoard.boardState) not in visited):
                         tempBoard.h1Val = tempBoard.calch1()
 
                         count += 1
+
+                        nodesGenerated += 1
 
                         nextNode = [tempBoard.h1Val + tempBoard.numMoves, count , tempBoard]
                         heapq.heappush(minQueue , nextNode)                    
@@ -108,8 +116,11 @@ def main():
 
     player = Player()
 
-    player.boardSolver(problemSet[0], 0)
+    # player.boardSolver(problemSet[0], 0)
 
+    for i in problemSet:
+        # player = Player()
+        player.boardSolver(i, 0)
     # print(len(problemSet))
 
 
