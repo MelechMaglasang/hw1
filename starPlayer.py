@@ -22,8 +22,15 @@ class Player(object):
 
             heapq.heappush(minQueue , initial)
 
+            visited = set()
+
             while ( minQueue):
+
                 currBoard = heapq.heappop(minQueue)
+
+                visited.add(tuple(currBoard[2].boardState))
+
+
 
                 # If thse heuristic is zero then it is at goal
                 
@@ -43,15 +50,14 @@ class Player(object):
                     tempBoard.doMove(blankIndex, move)
 
                     # Check if move has been done before?
-
-                    tempBoard.h1Val = tempBoard.calch1()
-
-                    count += 1
-
-                    nextNode = [tempBoard.h1Val + self.numMoves, count , tempBoard]
-                    heapq.heappush(minQueue , nextNode)
-
                     
+                    if (tuple(tempBoard.boardState) not in visited):
+                        tempBoard.h1Val = tempBoard.calch1()
+
+                        count += 1
+
+                        nextNode = [tempBoard.h1Val + self.numMoves, count , tempBoard]
+                        heapq.heappush(minQueue , nextNode)                    
 
 
 def genRandProblems(numBoards):
