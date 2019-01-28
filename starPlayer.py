@@ -18,7 +18,7 @@ class Player(object):
 
             minQueue = []
 
-            initial = [board.h1Val + self.numMoves, count , board]
+            initial = [board.h1Val + board.numMoves, count , board]
 
             heapq.heappush(minQueue , initial)
 
@@ -35,10 +35,10 @@ class Player(object):
                 # If thse heuristic is zero then it is at goal
                 
                 if (currBoard[2].calch1() == 0):
-                    print (self.numMoves)
+                    print (currBoard[2].numMoves)
                     return currBoard
 
-                self.numMoves += 1
+                # self.numMoves += 1
 
                 # Grabs for where the zero and returns list of possible moves
                 blankIndex = currBoard[2].boardState.index(0)
@@ -49,6 +49,8 @@ class Player(object):
 
                     tempBoard.doMove(blankIndex, move)
 
+                    tempBoard.numMoves += 1
+
                     # Check if move has been done before?
                     
                     if (tuple(tempBoard.boardState) not in visited):
@@ -56,14 +58,14 @@ class Player(object):
 
                         count += 1
 
-                        nextNode = [tempBoard.h1Val + self.numMoves, count , tempBoard]
+                        nextNode = [tempBoard.h1Val + tempBoard.numMoves, count , tempBoard]
                         heapq.heappush(minQueue , nextNode)                    
 
 
 def genRandProblems(numBoards):
     generatedProblems = []
     for x in range(numBoards):
-        temp = puzzleBoard.Board(-1, [0, 1, 2, 3, 4, 5, 6, 7, 8])
+        temp = puzzleBoard.Board(0, [0, 1, 2, 3, 4, 5, 6, 7, 8])
         generatedProblems.append(temp)
 
     # print(generatedProblems[1].boardState)

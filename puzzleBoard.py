@@ -14,11 +14,11 @@ POSSIBLE_MOVES[7] = [4,6,8]
 POSSIBLE_MOVES[8] = [5,7]
 
 class Board(object):
-    parity = -1
+   
     # boardState = [0,1,2,3,4,5,6,7,8,9]
 
-    def __init__(self, parity, boardState):
-        self.parity = parity
+    def __init__(self, numMoves, boardState):
+        self.numMoves = numMoves
         self.boardState = boardState
         self.dimension = 3
         self.prevState = None
@@ -59,9 +59,6 @@ class Board(object):
                 numMisplaced += self.boardState[i] % 3 + math.fabs(self.getRow(self.boardState[i]) - i % 3 )
 
         return numMisplaced
-
-    # def calculateParity():
-    #     return
 
 
     #Commit the move to the board
