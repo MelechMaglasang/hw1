@@ -108,7 +108,10 @@ def main():
 
     player = Player()
 
-    player.boardSolver(problemSet[0], 0)
+    for board in problemSet:
+        player.boardSolver(board, 0)
+
+
 
     # print(len(problemSet))
 
