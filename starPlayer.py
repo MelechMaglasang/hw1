@@ -10,62 +10,89 @@ class Player(object):
 
     def boardSolver(self, board, hMode):
 
+        count = 0
+
+        minQueue = []
+
         if (hMode == 0):
 
             board.h1Val = board.calch1()
-
-            count = 0
-
-            minQueue = []
+            print (board.h1Val)
 
             initial = [board.h1Val + board.numMoves, count , board]
 
-            heapq.heappush(minQueue , initial)
+        else:
+            board.h2Val = board.calch2()
+            print (board.h2Val)
 
-            visited = set()
+            initial = [board.h2Val + board.numMoves, count , board]
 
-            while ( minQueue):
+        heapq.heappush(minQueue , initial)
 
-                currBoard = heapq.heappop(minQueue)
+        nodesGenerated = 1
 
-                visited.add(tuple(currBoard[2].boardState))
+        visited = set()
+
+        while ( minQueue):
+
+            currBoard = heapq.heappop(minQueue)
+
+            visited.add(tuple(currBoard[2].boardState))
 
 
 
-                # If thse heuristic is zero then it is at goal
+            # If thse heuristic is zero then it is at goal
+            
+            if ( hMode == 0 and currBoard[2].calch1() == 0):
+                print ("Number of Moves:", currBoard[2].numMoves)
+                print ("Number of Nodes Generated:", nodesGenerated)
+                return currBoard
+
+            elif ( hMode == 1 and currBoard[2].calch2() == 0):
+                print ("Number of Moves:", currBoard[2].numMoves)
+                print ("Number of Nodes Generated:", nodesGenerated)
+                return currBoard
+
+
+            # self.numMoves += 1
+
+            # Grabs for where the zero and returns list of possible moves
+            blankIndex = currBoard[2].boardState.index(0)
+            availMoves = currBoard[2].getMoves(blankIndex)
+
+            for move in availMoves:
+                tempBoard = copy.deepcopy(currBoard[2])
+
+                tempBoard.doMove(blankIndex, move)
+
+                tempBoard.numMoves += 1
+
+                # nodesGenerated += 1
+
+
+                # Check if move has been done before?
                 
-                if (currBoard[2].calch1() == 0):
-                    print (currBoard[2].numMoves)
-                    return currBoard
+                if (tuple(tempBoard.boardState) not in visited):
+                    count += 1
 
-                # self.numMoves += 1
+                    nodesGenerated += 1
 
-                # Grabs for where the zero and returns list of possible moves
-                blankIndex = currBoard[2].boardState.index(0)
-                availMoves = currBoard[2].getMoves(blankIndex)
-
-                for move in availMoves:
-                    tempBoard = copy.deepcopy(currBoard[2])
-
-                    tempBoard.doMove(blankIndex, move)
-
-                    tempBoard.numMoves += 1
-
-                    # Check if move has been done before?
-                    
-                    if (tuple(tempBoard.boardState) not in visited):
+                    if (hMode == 0):
                         tempBoard.h1Val = tempBoard.calch1()
-
-                        count += 1
-
                         nextNode = [tempBoard.h1Val + tempBoard.numMoves, count , tempBoard]
-                        heapq.heappush(minQueue , nextNode)                    
+
+                    else:
+                        tempBoard.h2Val = tempBoard.calch2()
+                        nextNode = [tempBoard.h2Val + tempBoard.numMoves, count , tempBoard]
+
+
+                    heapq.heappush(minQueue , nextNode)                    
 
 
 def genRandProblems(numBoards):
     generatedProblems = []
     for x in range(numBoards):
-        temp = puzzleBoard.Board(0, [0, 1, 2, 3, 4, 5, 6, 7, 8])
+        temp = puzzleBoard.Board(0, [0,1,2,3,4,5,6,7,8])
         generatedProblems.append(temp)
 
     # print(generatedProblems[1].boardState)
@@ -101,18 +128,21 @@ def main():
 
     # problemList generatedProblems
 
-    # board = puzzleBoard.Board(-1, [1,0,2,3,4,5,6,7,8] )
+    board = puzzleBoard.Board(0, [7,2,4,5,0,6,8,3,1] )
     # board.createDict()
 
     problemSet =  genRandProblems(1200)
 
     player = Player()
 
-    for board in problemSet:
-        player.boardSolver(board, 0)
 
+    # player.boardSolver(board, 1 )
 
+    # board.calch2()
 
+    for i in problemSet:
+        # player = Player()
+        player.boardSolver(i, 0)
     # print(len(problemSet))
 
 

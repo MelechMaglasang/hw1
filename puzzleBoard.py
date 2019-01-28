@@ -33,7 +33,7 @@ class Board(object):
     
     def getRow(self,index):
 
-        if(index < 4):
+        if(index < 3):
             return 0
         elif (index < 6):
             return 1
@@ -44,7 +44,8 @@ class Board(object):
 
         numMisplaced = 0
         for i in range(len(self.boardState)):
-            if (self.boardState[i] != i):
+            
+            if (self.boardState[i] != i and self.boardState[i] != 0):
                 numMisplaced += 1
 
         return numMisplaced
@@ -52,12 +53,16 @@ class Board(object):
     def calch2(self):
 
         numMisplaced = 0
+        bleh = []
         for i in range(len(self.boardState)):
-            if (self.boardState[i] != i):
+            if (self.boardState[i] != i and self.boardState[i] != 0):
 
                 #column + row
-                numMisplaced += self.boardState[i] % 3 + math.fabs(self.getRow(self.boardState[i]) - i % 3 )
+                numMisplaced += math.fabs(self.boardState[i] % 3 - i % 3) + math.fabs( self.getRow(self.boardState[i]) - self.getRow(i) )
+                # bleh.append(math.fabs(self.boardState[i] % 3 - i % 3) + math.fabs( self.getRow(self.boardState[i]) - self.getRow(i) ))
 
+
+        # print (bleh)
         return numMisplaced
 
 
@@ -125,23 +130,23 @@ class Board(object):
 
 
 
-def main():
-    # print("Test")
+# def main():
+#     # print("Test")
 
-    # problemList generatedProblems
+#     # problemList generatedProblems
 
-    board = Board(-1, [0,1,2,3,4,5,6,7,8] )
-    board.createDict()
+#     board = Board(-1, [0,1,2,3,4,5,6,7,8] )
+#     board.createDict()
     
-    # problemSet =  genRandProblems(board)
+#     # problemSet =  genRandProblems(board)
 
 
-    for item in problemSet:
-        # print(item.boardState)
-        item.printBoard()
-        # print(item)
-        print("_________________________")
-        continue
+#     for item in problemSet:
+#         # print(item.boardState)
+#         item.printBoard()
+#         # print(item)
+#         print("_________________________")
+#         continue
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
