@@ -46,11 +46,14 @@ class Player(object):
             if ( hMode == 0 and currBoard[2].calch1() == 0):
                 print ("Number of Moves:", currBoard[2].numMoves)
                 print ("Number of Nodes Generated:", nodesGenerated)
+                print ("h1 Branching Factor: ", branchingFactor(nodesGenerated,currBoard[2].numMoves ))
                 return currBoard
 
             elif ( hMode == 1 and currBoard[2].calch2() == 0):
                 print ("Number of Moves:", currBoard[2].numMoves)
                 print ("Number of Nodes Generated:", nodesGenerated)
+                print ("h2 Branching Factor: ", branchingFactor(nodesGenerated,currBoard[2].numMoves ))
+
                 return currBoard
 
 
@@ -124,6 +127,10 @@ def genRandProblems(numBoards):
 
 def branchingFactor( N, d):
     N += 1
+
+    if (d == 0):
+        return 0
+
     initialGuess = N ** (1.0 // d)
 
     upperBound = initialGuess + (initialGuess)
@@ -138,7 +145,6 @@ def branchingFactor( N, d):
             nGuess += initialGuess ** i
 
         if ( nGuess <= N + 1 and nGuess >= N - 1 ):
-            print ("Binary")
             return initialGuess
 
         elif (nGuess > N):
@@ -158,27 +164,27 @@ def main():
     board = puzzleBoard.Board(0, [7,2,4,5,0,6,8,3,1] )
     # board.createDict()
 
-    problemSet =  genRandProblems(1200)
+    problemSet =  genRandProblems(5000)
 
     player = Player()
 
-    print (branchingFactor(6, 2 ))
+    # print (branchingFactor(6, 2 ))
 
-    print (branchingFactor(12, 4 ))
+    # print (branchingFactor(12, 4 ))
 
-    print (branchingFactor(18, 6 ))
+    # print (branchingFactor(18, 6 ))
 
-    print (branchingFactor(1641, 24))
+    # print (branchingFactor(1641, 24))
 
 
     # player.boardSolver(board, 1 )
 
     # board.calch2()
 
-    # for i in problemSet:
-    #     # player = Player()
-    #     player.boardSolver(i, 0)
-    # # print(len(problemSet))
+    for i in problemSet:
+        # player = Player()
+        player.boardSolver(i, 0)
+    # print(len(problemSet))
 
 
 if __name__ == "__main__":
