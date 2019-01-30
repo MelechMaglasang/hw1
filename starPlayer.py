@@ -21,11 +21,17 @@ class Player(object):
 
             initial = [board.h1Val + board.numMoves, count , board]
 
-        else:
+        elif (hMode == 1):
             board.h2Val = board.calch2()
             print (board.h2Val)
 
             initial = [board.h2Val + board.numMoves, count , board]
+
+        else:
+            board.h3Val = board.calch3()
+            print (board.h3Val)
+
+            initial = [board.h3Val + board.numMoves, count , board] 
 
         heapq.heappush(minQueue , initial)
 
@@ -50,6 +56,13 @@ class Player(object):
                 return currBoard
 
             elif ( hMode == 1 and currBoard[2].calch2() == 0):
+                print ("Number of Moves:", currBoard[2].numMoves)
+                print ("Number of Nodes Generated:", nodesGenerated)
+                print ("h2 Branching Factor: ", branchingFactor(nodesGenerated,currBoard[2].numMoves ))
+
+                return currBoard
+
+            elif ( hMode == 2 and currBoard[2].calch3() == 0):
                 print ("Number of Moves:", currBoard[2].numMoves)
                 print ("Number of Nodes Generated:", nodesGenerated)
                 print ("h2 Branching Factor: ", branchingFactor(nodesGenerated,currBoard[2].numMoves ))
@@ -84,9 +97,12 @@ class Player(object):
                         tempBoard.h1Val = tempBoard.calch1()
                         nextNode = [tempBoard.h1Val + tempBoard.numMoves, count , tempBoard]
 
-                    else:
+                    elif (hMode == 1):
                         tempBoard.h2Val = tempBoard.calch2()
                         nextNode = [tempBoard.h2Val + tempBoard.numMoves, count , tempBoard]
+                    else:
+                        tempBoard.h3Val = tempBoard.calch3()
+                        nextNode = [tempBoard.h3Val + tempBoard.numMoves, count , tempBoard]
 
 
                     heapq.heappush(minQueue , nextNode)                    

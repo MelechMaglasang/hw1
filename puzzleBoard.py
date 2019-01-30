@@ -24,6 +24,7 @@ class Board(object):
         self.prevState = None
         self.h1Val = None
         self.h2Val = None
+        self.h3Val = None
 
 
         
@@ -64,6 +65,21 @@ class Board(object):
 
         # print (bleh)
         return numMisplaced
+    
+    def calch3(self):
+        tempList = self.boardState[:]
+        count = 0
+        for i in range(len(tempList)):
+            if (i != 0):
+                blankInd = tempList.index(0)
+                source = tempList.index(blankInd)
+
+                tempVal = tempList[source]
+                tempList[source] = tempList[blankInd]
+                tempList[blankInd] = tempVal
+
+                count+=1
+        return count
 
 
     #Commit the move to the board
