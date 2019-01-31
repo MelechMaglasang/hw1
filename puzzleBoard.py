@@ -65,6 +65,13 @@ class Board(object):
         # print (bleh)
         return numMisplaced
 
+    def calch3(self):
+        numMisplaced = 0
+
+
+
+        return numMisplaced 
+
 
     #Commit the move to the board
     def doMove(self, source, target):
@@ -98,7 +105,7 @@ class Board(object):
     #     sourceInd = 
 
     def simMoves(self):
-        numSimMoves = random.randrange(1, 50, 1)
+        numSimMoves = random.randrange(2, 50, 1)
         # print("Simulated moves:", numSimMoves)
 
         for i in range(numSimMoves):
@@ -112,6 +119,22 @@ class Board(object):
 
         # print("New Board State:", self.boardState)
         return self.boardState
+
+
+    def simNumMoves(self, num):
+
+        for i in range(num):
+            blankInd = self.boardState.index(0)
+            possibleMoves = self.getMoves(blankInd)
+            chosenMove = random.choice(possibleMoves)
+
+            tempVal = self.boardState[chosenMove]
+            self.boardState[chosenMove] = self.boardState[blankInd]
+            self.boardState[blankInd] = tempVal
+
+        # print("New Board State:", self.boardState)
+        return self.boardState
+
 
     def printBoard(self):
         for i in range(3):
