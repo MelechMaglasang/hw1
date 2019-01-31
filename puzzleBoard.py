@@ -65,20 +65,60 @@ class Board(object):
 
         # print (bleh)
         return numMisplaced
+
+    def h3Helper(self, board):
+
+        numMisplaced = 0
+        for i in range(len(board)):
+            
+            if (board[i] != i and board[i] != 0):
+                numMisplaced += 1
+
+        return numMisplaced
     
     def calch3(self):
         tempList = self.boardState[:]
         count = 0
-        for i in range(len(tempList)):
-            if (i != 0 and tempList[i] != i):
-                blankInd = tempList.index(0)
-                source = tempList.index(blankInd)
+        # for i in range(len(tempList)):
+        blankInd = tempList.index(0)
+        source  = tempList.index(blankInd)
 
-                tempVal = tempList[source]
-                tempList[source] = tempList[blankInd]
-                tempList[blankInd] = tempVal
+        while (self.h3Helper(tempList) != 0):
+            # if (tempList.index(blankInd) != 0):
+            #     source = tempList.index(tempList.index(blankInd))
+            # blankInd = tempList.index(0)
 
-                count+=1
+            # if (tempList[i] != i):
+
+            # tempVal = tempList[source]
+            # tempList[source] = tempList[blankInd]
+            # tempList[blankInd] = tempVal
+
+            tempList[source],tempList[blankInd] = tempList[blankInd], tempList[source]
+            count+=1
+
+            blankInd = tempList.index(0)
+            source = tempList.index(blankInd)
+           
+            if (blankInd == 0 and source == 0):
+                if(self.h3Helper(tempList) == 0):
+                    return count
+                for i in range(source+1, len(tempList)):
+                    
+
+                    if tempList[i] != i :
+                        source = i
+                        count -= 1
+                        break 
+
+                   
+
+
+            
+
+            
+
+
         return count
 
 

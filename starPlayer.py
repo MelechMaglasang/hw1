@@ -69,8 +69,6 @@ class Player(object):
                 # print ("h3 Branching Factor: ", branchingFactor(
                 #     nodesGenerated, currBoard[2].numMoves))
 
-                print ("aslkdfjlasdjf")
-
                 return [currBoard[2].numMoves, nodesGenerated, branchingFactor(nodesGenerated, currBoard[2].numMoves), "h3"]
 
             # self.numMoves += 1
@@ -172,30 +170,38 @@ def main():
 
     # board = puzzleBoard.Board(0, [7, 2, 4, 5, 0, 6, 8, 3, 1])
     board = puzzleBoard.Board(0, [2, 0, 6, 1, 3, 4, 7, 5, 8])
+    # board = puzzleBoard.Board(0, [0, 1, 2, 4, 3, 5, 6, 7, 8])
 
     # board.createDict()
 
-    # problemSet = genRandProblems(1000, 30)
+    problemSet = genRandProblems(1000, 30)
 
     player = Player()
 
-    # board.simNumMoves(2)
+    board.simNumMoves(2)
+    for i in problemSet:
+        print (i.calch3())
+
 
     # print (board.boardState)
 
     # with open('Test.csv', mode='w') as h1File:
-    #     test_writer = csv.writer(h1File, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    #     for i in range(2, 4, 2):
+    #     test_writer = csv.writer(
+    #         h1File, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    #     for i in range(2, 10, 2):
     #         print (i)
 
     #         numSeen = 0
     #         while(numSeen < 100):
 
-    #             dSet = genRandProblems(1, 30)
+    #             if (i >= 20):
+    #                 dSet = genRandProblems(1, -2)
+    #             else:
+    #                 dSet = genRandProblems(1, i)
 
-    #             res1 = player.boardSolver(board, 0)
-    #             res2 = player.boardSolver(board,1)
-    #             res3 = player.boardSolver(board,2)
+    #             res1 = player.boardSolver(dSet[0], 0)
+    #             res2 = player.boardSolver(dSet[0], 1)
+    #             res3 = player.boardSolver(dSet[0], 2)
 
     #             if (res1[0] == i and res2[0] == i and res2[0] == i):
     #                 # Write results here?
@@ -205,7 +211,7 @@ def main():
 
     #                 numSeen += 1
 
-    print (player.boardSolver(board, 2))
+    # print (player.boardSolver(board, 2))
 
     # board.calch2()
 
