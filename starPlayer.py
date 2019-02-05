@@ -4,7 +4,7 @@ import heapq
 import copy
 import csv
 
-
+# Player class that utlizes puzzleBoard.py to conduct A* heuristic testing for the 8-puzzle
 class Player(object):
 
     def __init__(self):
@@ -44,36 +44,17 @@ class Player(object):
 
             visited.add(tuple(currBoard[2].boardState))
 
-            # If thse heuristic is zero then it is at goal
-
+            # Checks for if the goal state has been reached
             if (hMode == 0 and currBoard[2].calch1() == 0):
-
-                # print ("Number of Moves:", currBoard[2].numMoves)
-                # print ("Number of Nodes Generated:", nodesGenerated)
-                # print ("h1 Branching Factor: ", branchingFactor(
-                #     nodesGenerated, currBoard[2].numMoves))
-
                 return [currBoard[2].numMoves, nodesGenerated, branchingFactor(nodesGenerated, currBoard[2].numMoves), "h1"]
 
             elif (hMode == 1 and currBoard[2].calch2() == 0):
-                # print ("Number of Moves:", currBoard[2].numMoves)
-                # print ("Number of Nodes Generated:", nodesGenerated)
-                # print ("h2 Branching Factor: ", branchingFactor(
-                #     nodesGenerated, currBoard[2].numMoves))
-
                 return [currBoard[2].numMoves, nodesGenerated, branchingFactor(nodesGenerated, currBoard[2].numMoves), "h2"]
 
             elif (hMode == 2 and currBoard[2].calch3() == 0):
-                # print ("Number of Moves:", currBoard[2].numMoves)
-                # print ("Number of Nodes Generated:", nodesGenerated)
-                # print ("h3 Branching Factor: ", branchingFactor(
-                #     nodesGenerated, currBoard[2].numMoves))
-
                 return [currBoard[2].numMoves, nodesGenerated, branchingFactor(nodesGenerated, currBoard[2].numMoves), "h3"]
 
-            # self.numMoves += 1
-
-            # Grabs for where the zero and returns list of possible moves
+            # Grab data for the next set of moves
             blankIndex = currBoard[2].boardState.index(0)
             availMoves = currBoard[2].getMoves(blankIndex)
 
@@ -84,9 +65,7 @@ class Player(object):
 
                 tempBoard.numMoves += 1
 
-                # nodesGenerated += 1
-
-                # Check if move has been done before?
+                # Check if move has been done before
 
                 if (tuple(tempBoard.boardState) not in visited):
                     count += 1
@@ -164,78 +143,37 @@ def branchingFactor(N, d):
 
 
 def main():
-    # print("Test")
 
-    # problemList generatedProblems
-
-    # board = puzzleBoard.Board(0, [7, 2, 4, 5, 0, 6, 8, 3, 1])
-    board = puzzleBoard.Board(0, [2, 0, 6, 1, 3, 4, 7, 5, 8])
-    # board = puzzleBoard.Board(0, [0, 1, 2, 4, 3, 5, 6, 7, 8])
-
-    # board.createDict()
-
-    problemSet = genRandProblems(1000, 30)
-
+    # Declare Player
     player = Player()
 
-    board.simNumMoves(2)
-    for i in problemSet:
-        print (i.calch3())
+    # Conducting Tests
+    with open('Test.csv', mode='w') as h1File:
+        test_writer = csv.writer(
+            h1File, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        for i in range(2, 26, 2):
+            print(i)
+
+            numSeen = 0
+            while(numSeen < 100):
+
+                if (i >= 20):
+                    dSet = genRandProblems(1, -2)
+                else:
+                    dSet = genRandProblems(1, i)
+
+                res1 = player.boardSolver(dSet[0], 0)
+                res2 = player.boardSolver(dSet[0], 1)
+                res3 = player.boardSolver(dSet[0], 2)
+
+                if (res1[0] == i and res2[0] == i and res2[0] == i):
+                    # Write results here?
+                    test_writer.writerow(res1)
+                    test_writer.writerow(res2)
+                    test_writer.writerow(res3)
+
+                    numSeen += 1
 
 
-    # print (board.boardState)
-
-    # with open('Test.csv', mode='w') as h1File:
-    #     test_writer = csv.writer(
-    #         h1File, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-    #     for i in range(2, 10, 2):
-    #         print (i)
-
-    #         numSeen = 0
-    #         while(numSeen < 100):
-
-    #             if (i >= 20):
-    #                 dSet = genRandProblems(1, -2)
-    #             else:
-    #                 dSet = genRandProblems(1, i)
-
-    #             res1 = player.boardSolver(dSet[0], 0)
-    #             res2 = player.boardSolver(dSet[0], 1)
-    #             res3 = player.boardSolver(dSet[0], 2)
-
-    #             if (res1[0] == i and res2[0] == i and res2[0] == i):
-    #                 # Write results here?
-    #                 test_writer.writerow(res1)
-    #                 test_writer.writerow(res2)
-    #                 test_writer.writerow(res3)
-
-    #                 numSeen += 1
-
-    # print (player.boardSolver(board, 2))
-
-    # board.calch2()
-
-    # with open('h1Test.csv', mode='w') as h1File:
-    #     test_writer = csv.writer(h1File, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
-    #     for i in problemSet:
-    #         # player = Player()
-    #         res = player.boardSolver(i, 0)
-
-    #         if (res[0] > 1):
-    #             test_writer.writerow(res)
-
-    # with open('h1TestHigh2.csv', mode='w') as h1File:
-    #     test_writer = csv.writer(h1File, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
-    #     for i in problemSet:
-    #         # player = Player()
-    #         res = player.boardSolver(i, 0)
-
-    #         if (res[0] > 1):
-    #             test_writer.writerow(res)
-    # print(len(problemSet))
-
-    # test_writer.close()
 if __name__ == "__main__":
     main()
